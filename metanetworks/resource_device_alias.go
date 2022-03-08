@@ -10,15 +10,22 @@ import (
 func resourceDeviceAlias() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of the device alias.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"device_id": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "The ID of the device.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 			"alias": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Domain name.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 		},
 		Create: resourceDeviceAliasCreate,

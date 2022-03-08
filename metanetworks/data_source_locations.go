@@ -12,40 +12,49 @@ import (
 
 func dataSourceLocations() *schema.Resource {
 	return &schema.Resource{
+		Description: "Returns all the `locations`.",
 		ReadContext: dataSourceLocationsRead,
 		Schema: map[string]*schema.Schema{
 			"locations": {
-				Type:     schema.TypeList,
-				Computed: true,
+				Description: "List of `locations`.",
+				Type:        schema.TypeList,
+				Computed:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"city": {
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: "The city of the location.",
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"country": {
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: "The country of the location.",
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"latitude": {
-							Type:     schema.TypeFloat,
-							Computed: true,
+							Description: "The latitude of the location.",
+							Type:        schema.TypeFloat,
+							Computed:    true,
 						},
 						"longitude": {
-							Type:     schema.TypeFloat,
-							Computed: true,
+							Description: "The longitude of the location.",
+							Type:        schema.TypeFloat,
+							Computed:    true,
 						},
 						"name": {
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: "The name of the location.",
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"state": {
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: "The state of the location.",
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"status": {
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: "The status of the location. Valid values are `Operational`, `Degraded`, `Outage`, and `Maintenance`.",
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

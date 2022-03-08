@@ -10,15 +10,22 @@ import (
 func resourceRoutingGroupAttachment() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of this resource.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"routing_group_id": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "The ID of the routing group.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 			"network_element_id": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "The ID of the network element to attach to the routing group.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 		},
 		Create: resourceRoutingGroupAttachmentCreate,

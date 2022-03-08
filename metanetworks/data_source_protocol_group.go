@@ -9,65 +9,80 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
-func dataSourceProtocolGroup() *schema.Resource {
-	return &schema.Resource{
-		ReadContext: dataSourceProtocolGroupRead,
-		Schema: map[string]*schema.Schema{
-			"name_regex": {
-				Type:         schema.TypeString,
-				Required:     true,
-				ValidateFunc: validation.StringIsValidRegExp,
-			},
-			"description": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"name": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"protocols": {
-				Type: schema.TypeList,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"from_port": {
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"port": {
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"proto": {
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"to_port": {
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-					},
+var ProtocolGroupSchema = map[string]*schema.Schema{
+	"name_regex": {
+		Description:  "A regex string to apply to the `protocol_group` list returned by Metanetworks. This allows more advanced filtering.",
+		Type:         schema.TypeString,
+		Required:     true,
+		ValidateFunc: validation.StringIsValidRegExp,
+	},
+	"description": {
+		Description: "Description of the `protocol_group`.",
+		Type:        schema.TypeString,
+		Computed:    true,
+	},
+	"name": {
+		Description: "Name of the `protocol_group`.",
+		Type:        schema.TypeString,
+		Computed:    true,
+	},
+	"protocols": {
+		Description: "List of `protocols`.",
+		Type:        schema.TypeList,
+		Elem: &schema.Resource{
+			Schema: map[string]*schema.Schema{
+				"from_port": {
+					Description: "From port number.",
+					Type:        schema.TypeInt,
+					Computed:    true,
 				},
-				Computed: true,
-			},
-			"created_at": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"modified_at": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"org_id": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-
-			"read_only": {
-				Type:     schema.TypeBool,
-				Computed: true,
+				"port": {
+					Description: "Port number.",
+					Type:        schema.TypeInt,
+					Computed:    true,
+				},
+				"proto": {
+					Description: "Protocol. Valid values are `tcp`, `udp` and `icmp`.",
+					Type:        schema.TypeString,
+					Computed:    true,
+				},
+				"to_port": {
+					Description: "To port number.",
+					Type:        schema.TypeInt,
+					Computed:    true,
+				},
 			},
 		},
+		Computed: true,
+	},
+	"created_at": {
+		Description: "Creation Timestamp.",
+		Type:        schema.TypeString,
+		Computed:    true,
+	},
+	"modified_at": {
+		Description: "Modification Timestamp.",
+		Type:        schema.TypeString,
+		Computed:    true,
+	},
+	"org_id": {
+		Description: "The ID of the organization.",
+		Type:        schema.TypeString,
+		Computed:    true,
+	},
+
+	"read_only": {
+		Description: "If `protocol_group` is read only.",
+		Type:        schema.TypeBool,
+		Computed:    true,
+	},
+}
+
+func dataSourceProtocolGroup() *schema.Resource {
+	return &schema.Resource{
+		Description: "Returns a `protocol_group` of the organization.",
+		ReadContext: dataSourceProtocolGroupRead,
+		Schema:      ProtocolGroupSchema,
 	}
 }
 

@@ -10,15 +10,22 @@ import (
 func resourceMappedServiceAlias() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of the mapped service alias.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"mapped_service_id": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "The ID of the mapped service.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 			"alias": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Domain name.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 		},
 		Create: resourceMappedServiceAliasCreate,

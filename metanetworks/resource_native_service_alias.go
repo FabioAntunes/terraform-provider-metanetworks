@@ -10,6 +10,11 @@ import (
 func resourceNativeServiceAlias() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of the native service alias.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"native_service_id": {
 				Type:     schema.TypeString,
 				Required: true,

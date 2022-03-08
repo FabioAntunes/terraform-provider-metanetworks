@@ -7,24 +7,33 @@ import (
 func resourceMappedSubnetsMappedHost() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of this resource.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"mapped_subnets_id": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "ID of the mapped subnet network element.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 			"ignore_bounds": {
-				Type:     schema.TypeBool,
-				Default:  false,
-				Optional: true,
+				Description: "Allow setting mapped hosts outside of the defined mapped subnets, default=false.",
+				Type:        schema.TypeBool,
+				Default:     false,
+				Optional:    true,
 			},
 			"mapped_host": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "Remote hostname or IP.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Mapped hostname.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 		},
 		Create: resourceMappedSubnetsMappedHostCreate,
@@ -43,7 +52,7 @@ func resourceMappedSubnetsMappedHostSet(d *schema.ResourceData, m interface{}) e
 	ignoreBounds := d.Get("ignore_bounds").(bool)
 
 	mappedHost := MappedHost{
-		MappedHost:    host,
+		MappedHost:   host,
 		IgnoreBounds: ignoreBounds,
 	}
 	_, err := client.SetNetworkElementMappedHosts(mappedSubnetsID, name, &mappedHost)

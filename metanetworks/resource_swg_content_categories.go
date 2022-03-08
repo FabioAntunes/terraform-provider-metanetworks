@@ -7,59 +7,57 @@ import (
 func resourceSwgContentCategories() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of the content category.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"description": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "The description of the content category.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The name of the content category.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"confidence_level": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Degree of confidence (threshold) that must be met when the classification engine decides on URL classification. Enum: 'LOW', 'MEDIUM', 'HIGH'",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"forbid_uncategorized_urls": {
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: "Whether to forbid access to uncategorized URLs.",
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"types": {
-				Type:     schema.TypeSet,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				Optional: true,
+				Description: "Array of strings with category types to restrict. Enum: 'Abortion', 'Adult Sex Education', 'Advertising', 'Alcohol Tobacco', 'Anonymizer', 'Blogs', 'Computer Hacking', 'Dead Sites', 'Drugs', 'Education', 'Email Host', 'Finance', 'Food', 'Gambling', 'Games', 'Government', 'Health', 'Hobbies Interests', 'Illegal Or Questionable', 'Job Employment', 'Lingerie Bikini', 'Military', 'Militancy Hate And Extremism', 'Music', 'News And Media', 'Nudity', 'Politics', 'Pornography', 'Portals', 'Real Estate', 'Religion', 'Search', 'Shopping And Auctions', 'Social Networking', 'Society And Lifestyle', 'Software Technology', 'Sports', 'Streaming Media', 'Television Movies', 'Translator', 'Travel', 'Vehicles', 'Violence', 'Weapons'",
+				Type:        schema.TypeSet,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Optional:    true,
 			},
 			"urls": {
-				Type:     schema.TypeSet,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				Optional: true,
-			},
-			"detail": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"status": {
-				Type:     schema.TypeInt,
-				Computed: true,
-			},
-			"title": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"type": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "A list of URLs to put under this custom content category.",
+				Type:        schema.TypeSet,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Optional:    true,
 			},
 			"created_at": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Creation Timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"modified_at": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Modification Timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"org_id": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "The ID of the organization.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 		},
 		Create: resourceSwgContentCategoriesCreate,
@@ -175,10 +173,6 @@ func swgContentCategoriesToResource(d *schema.ResourceData, m *SwgContentCategor
 	d.Set("forbid_uncategorized_urls", m.ForbidUncategorizedUrls)
 	d.Set("types", m.Types)
 	d.Set("urls", m.Urls)
-	d.Set("detail", m.Detail)
-	d.Set("status", m.Status)
-	d.Set("title", m.Title)
-	d.Set("type", m.Type)
 	d.Set("created_at", m.CreatedAt)
 	d.Set("modified_at", m.ModifiedAt)
 	d.Set("org_id", m.OrgID)

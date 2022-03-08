@@ -9,63 +9,15 @@ import (
 
 func dataSourceProtocolGroups() *schema.Resource {
 	return &schema.Resource{
+		Description: "Returns all `protocol_group` of the organization",
 		ReadContext: dataSourceProtocolGroupsRead,
 		Schema: map[string]*schema.Schema{
 			"protocol_groups": {
-				Type:     schema.TypeList,
-				Computed: true,
+				Description: "List of all `protocol_group`.",
+				Type:        schema.TypeList,
+				Computed:    true,
 				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"description": {
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": {
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"protocols": {
-							Type: schema.TypeList,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"from_port": {
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"port": {
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"proto": {
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"to_port": {
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-								},
-							},
-							Computed: true,
-						},
-						"created_at": {
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"modified_at": {
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"org_id": {
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-
-						"read_only": {
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-					},
+					Schema: ProtocolGroupSchema,
 				},
 			},
 		},
