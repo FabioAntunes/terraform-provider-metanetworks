@@ -31,9 +31,11 @@ func Provider() *schema.Provider {
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"metanetworks_group":     dataSourceGroup(),
-			"metanetworks_locations": dataSourceLocations(),
-			"metanetworks_user":      dataSourceUser(),
+			"metanetworks_group":           dataSourceGroup(),
+			"metanetworks_locations":       dataSourceLocations(),
+			"metanetworks_user":            dataSourceUser(),
+			"metanetworks_protocol_groups": dataSourceProtocolGroups(),
+			"metanetworks_protocol_group":  dataSourceProtocolGroup(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"metanetworks_egress_route":                 resourceEgressRoute(),
