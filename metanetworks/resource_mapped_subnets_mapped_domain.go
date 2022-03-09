@@ -7,24 +7,33 @@ import (
 func resourceMappedSubnetsMappedDomain() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of this resource.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"mapped_subnets_id": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "ID of the mapped subnet network element.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 			"enterprise_dns": {
-				Type:     schema.TypeBool,
-				Default:  false,
-				Optional: true,
+				Description: "Resolve and route traffic according to routing group, default=false.",
+				Type:        schema.TypeBool,
+				Default:     false,
+				Optional:    true,
 			},
 			"mapped_domain": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "Remote DNS suffix.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Mapped DNS suffix.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 		},
 		Create: resourceMappedSubnetsMappedDomainCreate,

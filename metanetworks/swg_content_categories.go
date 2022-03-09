@@ -17,12 +17,8 @@ type SwgContentCategories struct {
 	ForbidUncategorizedUrls bool     `json:"forbid_uncategorized_urls,omitempty" type:"bool"`
 	Types                   []string `json:"types,omitempty"`
 	Urls                    []string `json:"urls,omitempty"`
-	Detail                  string   `json:"detail,omitempty" meta_api:"read_only"`
 	ID                      string   `json:"id,omitempty" meta_api:"read_only"`
-	Status                  string   `json:"status,omitempty" meta_api:"read_only"`
-	Title                   string   `json:"title,omitempty" meta_api:"read_only"`
 	OrgID                   string   `json:"org_id,omitempty" meta_api:"read_only"`
-	Type                    string   `json:"type,omitempty" meta_api:"read_only"`
 	CreatedAt               string   `json:"created_at,omitempty" meta_api:"read_only"`
 	ModifiedAt              string   `json:"modified_at,omitempty" meta_api:"read_only"`
 }

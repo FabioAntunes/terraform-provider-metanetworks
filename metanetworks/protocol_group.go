@@ -2,11 +2,14 @@ package metanetworks
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"reflect"
+	"strconv"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 const (
@@ -28,8 +31,79 @@ type ProtocolGroup struct {
 // Protocol ...
 type Protocol struct {
 	FromPort int64  `json:"from_port" type:"integer"`
-	ToPort   int64  `json:"to_port" type:"integer"`
+	Port     int64  `json:"port" type:"integer"`
 	Protocol string `json:"proto"`
+	ToPort   int64  `json:"to_port" type:"integer"`
+}
+
+func flattenProtocolGroup(pg ProtocolGroup) map[string]interface{} {
+	out := make(map[string]interface{})
+	protocols := make([]map[string]interface{}, len(pg.Protocols), len(pg.Protocols))
+
+	out["description"] = pg.Description
+	out["name"] = pg.Name
+	for j, pv := range pg.Protocols {
+		p := make(map[string]interface{})
+		p["from_port"] = pv.FromPort
+		p["port"] = pv.Port
+		p["proto"] = pv.Protocol
+		p["to_port"] = pv.ToPort
+
+		protocols[j] = p
+	}
+	out["protocols"] = protocols
+	out["created_at"] = pg.CreatedAt
+	out["modified_at"] = pg.ModifiedAt
+	out["org_id"] = pg.OrgID
+	out["read_only"] = pg.ReadOnly
+	return out
+}
+
+func flattenProtocolGroups(pg []ProtocolGroup) []map[string]interface{} {
+	var out = make([]map[string]interface{}, len(pg), len(pg))
+	for i, v := range pg {
+		out[i] = flattenProtocolGroup(v)
+	}
+	return out
+}
+
+func ProtocolGroupToResource(d *schema.ResourceData, m *ProtocolGroup) error {
+	flattenedPG := flattenProtocolGroup(*m)
+
+	for key, val := range flattenedPG {
+		err := d.Set(key, val)
+		if err != nil {
+			return err
+		}
+	}
+
+	d.SetId(m.ID)
+
+	return nil
+}
+
+// protocolGroupToResource ...
+func ProtocolGroupsToResource(d *schema.ResourceData, m *[]ProtocolGroup) error {
+	err := d.Set("protocol_groups", flattenProtocolGroups(*m))
+
+	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
+
+	return err
+}
+
+func (c *Client) GetProtocolGroups() ([]ProtocolGroup, error) {
+	var protocolGroups []ProtocolGroup
+	err := c.Read(protocolGroupsEndpoint, &protocolGroups)
+	if err != nil {
+
+		return nil, err
+	}
+
+	if len(protocolGroups) == 0 {
+		return nil, fmt.Errorf("Protocol Groups Not found")
+	}
+
+	return protocolGroups, nil
 }
 
 // GetProtocolGroup ...

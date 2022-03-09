@@ -7,59 +7,57 @@ import (
 func resourceSwgThreatCategories() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of the threat category.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The name of the threat category.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"description": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "The description of the threat category.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"countries": {
-				Type:     schema.TypeSet,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				Optional: true,
+				Description: "Access restricted countries. Enum by Alpha-2 code (ISO-3166). EG 'AU' -> Australia, 'US' -> United States",
+				Type:        schema.TypeSet,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Optional:    true,
 			},
 			"confidence_level": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Confidence of the classification when the classification engine classifies a URL",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"risk_level": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Risk threshold that will not be tolerated while browsing URL categories under selected threat types. Enum: 'LOW', 'MEDIUM', 'HIGH'",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"types": {
-				Type:     schema.TypeSet,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				Required: true,
-			},
-			"detail": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"status": {
-				Type:     schema.TypeInt,
-				Computed: true,
-			},
-			"type": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"title": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Predefined threat types to protect against. Enum: 'Abused TLD', 'Bitcoin Related', 'Blackhole', 'Bot', 'Brute Forcer', 'Chat Server', 'CnC', 'Compromised', 'DDoS Target', 'Drive By Src', 'Drop', 'DynDNS', 'EXE Source', 'Fake AV', 'IP Check', 'Mobile CnC', 'Mobile Spyware CnC', 'Online Gaming', 'P2P CnC', 'P2P', 'Parking', 'Phishing', 'Proxy', 'Remote Access Service', 'Scanner', 'Self Signed SSL', 'Spam', 'Spyware CnC', 'Tor', 'Undesirable', 'Utility', 'VPN'",
+				Type:        schema.TypeSet,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Required:    true,
 			},
 			"created_at": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Creation Timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"modified_at": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Modification Timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"org_id": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "The ID of the organization.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 		},
 		Create: resourceSwgThreatCategoriesCreate,

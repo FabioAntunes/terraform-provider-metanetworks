@@ -9,45 +9,55 @@ import (
 
 func dataSourceGroup() *schema.Resource {
 	return &schema.Resource{
+		Description: "Returns a group of the organization.",
 		ReadContext: dataSourceGroupRead,
 		Schema: map[string]*schema.Schema{
 			"description": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "The description of the group.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The name of the group.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"expression": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Allows grouping entities by their tags. Filtering by tag value is also supported if provided. Supported operations: AND, OR, XOR, parenthesis.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"provisioned_by": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Groups can be provisioned in the system either by locally creating the groups from the Admin portal or API. Another, more common practice, is to provision groups from an organization directory service, by way of SCIM or LDAP protocols.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"created_at": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Creation Timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"modified_at": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Modification Timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"org_id": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "The ID of the organization.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"roles": {
-				Type:     schema.TypeSet,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				Computed: true,
+				Description: "The group roles.",
+				Type:        schema.TypeSet,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Computed:    true,
 			},
 			"users": {
-				Type:     schema.TypeSet,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				Computed: true,
+				Description: "The group users.",
+				Type:        schema.TypeSet,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Computed:    true,
 			},
 		},
 	}

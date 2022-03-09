@@ -10,45 +10,59 @@ import (
 func resourceProtocolGroup() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
+			"id": {
+				Description: "The ID of the protocol group.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
 			"description": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "The description of the protocol group.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "The name of the protocol group.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"protocols": {
-				Type: schema.TypeList,
+				Description: "List of Protocols to attach to the protocol group.",
+				Type:        schema.TypeList,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"from_port": {
-							Type:     schema.TypeInt,
-							Required: true,
+							Description: "From port number.",
+							Type:        schema.TypeInt,
+							Required:    true,
 						},
 						"to_port": {
-							Type:     schema.TypeInt,
-							Required: true,
+							Description: "To port number.",
+							Type:        schema.TypeInt,
+							Required:    true,
 						},
 						"proto": {
-							Type:     schema.TypeString,
-							Required: true,
+							Description: "The protocol. Valid values are `tcp`, `udp` and `icmp`.",
+							Type:        schema.TypeString,
+							Required:    true,
 						},
 					},
 				},
 				Optional: true,
 			},
 			"created_at": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Creation Timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"modified_at": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Modification Timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"org_id": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "The ID of the organization.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"read_only": {
 				Type:     schema.TypeBool,

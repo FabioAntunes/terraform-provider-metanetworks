@@ -14,26 +14,31 @@ func Provider() *schema.Provider {
 	provider := &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"api_key": {
+				Description: "API key. Can be specified with the `METANETWORKS_API_KEY` environment variable.",
 				Type:        schema.TypeString,
 				DefaultFunc: schema.EnvDefaultFunc("METANETWORKS_API_KEY", nil),
 				Optional:    true,
 			},
 			"api_secret": {
+				Description: "API secret. Can be specified with the `METANETWORKS_API_SECRET` environment variable.",
 				Type:        schema.TypeString,
 				DefaultFunc: schema.EnvDefaultFunc("METANETWORKS_API_SECRET", nil),
 				Optional:    true,
 				Sensitive:   true,
 			},
 			"org": {
+				Description: "API secret. Can be specified with the `METANETWORKS_ORG`  environment variable.",
 				Type:        schema.TypeString,
 				DefaultFunc: schema.EnvDefaultFunc("METANETWORKS_ORG", nil),
 				Optional:    true,
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"metanetworks_group":     dataSourceGroup(),
-			"metanetworks_locations": dataSourceLocations(),
-			"metanetworks_user":      dataSourceUser(),
+			"metanetworks_group":           dataSourceGroup(),
+			"metanetworks_locations":       dataSourceLocations(),
+			"metanetworks_user":            dataSourceUser(),
+			"metanetworks_protocol_groups": dataSourceProtocolGroups(),
+			"metanetworks_protocol_group":  dataSourceProtocolGroup(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"metanetworks_egress_route":                 resourceEgressRoute(),
