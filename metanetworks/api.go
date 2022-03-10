@@ -4,12 +4,22 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"reflect"
 	"time"
 )
+
+type ApiError struct {
+	Err        error
+	StatusCode int
+}
+
+func (e *ApiError) Error() string {
+	return fmt.Sprintf("%s", e.Err)
+}
 
 // Request ...
 func (c *Client) Request(endpoint, method string, data []byte, contentType string) ([]byte, error) {
@@ -44,7 +54,10 @@ func (c *Client) Request(endpoint, method string, data []byte, contentType strin
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
-		return nil, errors.New(string(body))
+		return nil, &ApiError{
+			StatusCode: resp.StatusCode,
+			Err:        errors.New(string(body)),
+		}
 	}
 
 	log.Printf("Response: %s", body)

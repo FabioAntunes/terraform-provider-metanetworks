@@ -1,9 +1,9 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
 HOSTNAME=localhost
-NAMESPACE=mataneine
+NAMESPACE=FabioAntunes
 NAME=metanetworks
 BINARY=terraform-provider-${NAME}
-VERSION=1.0.0-pre-2.1
+VERSION=1.0.0-pre-2.2
 OS_ARCH=darwin_amd64
 
 default: install

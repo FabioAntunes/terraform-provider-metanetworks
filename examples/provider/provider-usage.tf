@@ -2,7 +2,7 @@ terraform {
   required_providers {
     metanetworks = {
       source  = "FabioAntunes/metanetworks"
-      version = "1.0.0-alpha"
+      version = "1.0.0-pre-2.2"
     }
   }
 }
