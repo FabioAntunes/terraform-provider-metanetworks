@@ -203,3 +203,39 @@ func WaitNetworkElementCreate(client *Client, networkElementID string) (*Client,
 
 	return client, err
 }
+
+func StatusNetworkElementAliasCreate(client *Client, networkElementID string, alias string) resource.StateRefreshFunc {
+	return func() (interface{}, string, error) {
+		var networkElement *NetworkElement
+		networkElement, err := client.GetNetworkElement(networkElementID)
+		if err != nil {
+			return 0, "", err
+		}
+
+		for i := 0; i < len(networkElement.Aliases); i++ {
+			if networkElement.Aliases[i] == alias {
+				return networkElement, "Completed", nil
+			}
+		}
+
+		return networkElement, "Pending", nil
+	}
+}
+
+func WaitNetworkElementAliasCreate(client *Client, networkElementID string, alias string) (*Client, error) {
+	createStateConf := &resource.StateChangeConf{
+		Pending:    []string{"Pending"},
+		Target:     []string{"Completed"},
+		Timeout:    5 * time.Minute,
+		MinTimeout: 5 * time.Second,
+		Delay:      3 * time.Second,
+		Refresh:    StatusNetworkElementAliasCreate(client, networkElementID, alias),
+	}
+
+	_, err := createStateConf.WaitForState()
+	if err != nil {
+		return nil, err
+	}
+
+	return client, err
+}

@@ -58,6 +58,12 @@ func resourceMappedServiceAliasCreate(d *schema.ResourceData, m interface{}) err
 		return err
 	}
 
+	_, err = WaitNetworkElementAliasCreate(client, mappedServiceID, alias)
+
+	if err != nil {
+		return fmt.Errorf("Error waiting for alias attachment creation (%s) (%s)", mappedServiceID, err)
+	}
+
 	d.SetId(fmt.Sprintf("%s_%s", mappedServiceID, alias))
 
 	return resourceMappedServiceAliasRead(d, m)
