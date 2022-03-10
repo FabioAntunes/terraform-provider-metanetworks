@@ -72,6 +72,12 @@ func resourceMappedServiceAliasRead(d *schema.ResourceData, m interface{}) error
 	var networkElement *NetworkElement
 	networkElement, err := client.GetNetworkElement(mappedServiceID)
 	if err != nil {
+		if apierr, ok := err.(*ApiError); ok && apierr.StatusCode == 404 {
+			log.Printf("[WARN] Removing Mapped Service Alias %q because mapped service %q no longer exists", d.Get("id").(string), mappedServiceID)
+			d.SetId("")
+
+			return nil
+		}
 		return err
 	}
 
