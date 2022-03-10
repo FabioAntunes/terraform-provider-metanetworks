@@ -3,7 +3,7 @@ HOSTNAME=localhost
 NAMESPACE=mataneine
 NAME=metanetworks
 BINARY=terraform-provider-${NAME}
-VERSION=1.0.0-pre-2
+VERSION=1.0.0-pre-2.1
 OS_ARCH=darwin_amd64
 
 default: install
