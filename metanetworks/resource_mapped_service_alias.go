@@ -3,6 +3,7 @@ package metanetworks
 import (
 	"errors"
 	"fmt"
+	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -63,6 +64,24 @@ func resourceMappedServiceAliasCreate(d *schema.ResourceData, m interface{}) err
 }
 
 func resourceMappedServiceAliasRead(d *schema.ResourceData, m interface{}) error {
+	client := m.(*Client)
+
+	mappedServiceID := d.Get("mapped_service_id").(string)
+	alias := d.Get("alias").(string)
+
+	var networkElement *NetworkElement
+	networkElement, err := client.GetNetworkElement(mappedServiceID)
+	if err != nil {
+		return err
+	}
+
+	for i := 0; i < len(networkElement.Aliases); i++ {
+		if networkElement.Aliases[i] == alias {
+			return nil
+		}
+	}
+	log.Printf("[WARN] Removing Mapped Service Alias %q because it's gone", d.Get("id").(string))
+	d.SetId("")
 	return nil
 }
 

@@ -2,7 +2,6 @@ package metanetworks
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -209,7 +208,6 @@ func flattenProtocols(in []Protocol) []map[string]interface{} {
 		m["proto"] = v.Protocol
 		out[i] = m
 	}
-	log.Printf("flattenProtocols: %s", out)
 	return out
 }
 
