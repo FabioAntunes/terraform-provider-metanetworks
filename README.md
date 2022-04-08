@@ -31,7 +31,7 @@ terraform {
   required_providers {
     metanetworks = {
       source  = "FabioAntunes/metanetworks"
-      version = "1.0.0-pre-2.3"
+      version = "1.0.0-pre-2.4"
     }
   }
 }
@@ -78,7 +78,7 @@ terraform {
   required_providers {
     metanetworks = {
       source  = "localhost/FabioAntunes/metanetworks"
-      version = "1.0.0-pre-2.3"
+      version = "1.0.0-pre-2.4"
     }
   }
 }
