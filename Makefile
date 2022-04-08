@@ -3,8 +3,8 @@ HOSTNAME=localhost
 NAMESPACE=FabioAntunes
 NAME=metanetworks
 BINARY=terraform-provider-${NAME}
-VERSION=1.0.0-pre-2.3
-OS_ARCH=darwin_amd64
+VERSION?=1.0.0-pre-2.4
+OS_ARCH?=darwin_amd64
 
 default: install
 

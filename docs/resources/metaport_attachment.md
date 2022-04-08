@@ -36,7 +36,7 @@ resource "metanetworks_metaport_attachment" "example" {
 
 ### Required
 
-- **metaport_id** (String) The ID of the metaport.
+- **metaport_id** (String) The ID of the Metaport.
 - **network_element_id** (String) The ID of the network element to attach to the Metaport.
 
 ### Read-Only

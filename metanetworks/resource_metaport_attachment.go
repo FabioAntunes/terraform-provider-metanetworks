@@ -19,7 +19,7 @@ func resourceMetaportAttachment() *schema.Resource {
 				Computed:    true,
 			},
 			"metaport_id": {
-				Description: "The ID of the metaport.",
+				Description: "The ID of the Metaport.",
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
@@ -34,6 +34,9 @@ func resourceMetaportAttachment() *schema.Resource {
 		Create: resourceMetaportAttachmentCreate,
 		Read:   resourceMetaportAttachmentRead,
 		Delete: resourceMetaportAttachmentDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
 	}
 }
 
@@ -79,8 +82,13 @@ func resourceMetaportAttachmentCreate(d *schema.ResourceData, m interface{}) err
 func resourceMetaportAttachmentRead(d *schema.ResourceData, m interface{}) error {
 	client := m.(*Client)
 
-	elementID := d.Get("network_element_id").(string)
-	metaportID := d.Get("metaport_id").(string)
+	id := d.Get("id").(string)
+	ids := strings.Split(id, "_")
+	if len(ids) != 2 {
+		return fmt.Errorf("Error missing id for metaport attachment got (%s)", id)
+	}
+	metaportID := ids[0]
+	elementID := ids[1]
 
 	var metaport *MetaPort
 	metaport, err := client.GetMetaPort(metaportID)
@@ -99,6 +107,9 @@ func resourceMetaportAttachmentRead(d *schema.ResourceData, m interface{}) error
 	// If not present we need to destroy the terraform resource so that it is recreated.
 	if !found {
 		d.SetId("")
+	} else {
+		d.Set("network_element_id", elementID)
+		d.Set("metaport_id", metaportID)
 	}
 
 	return nil
